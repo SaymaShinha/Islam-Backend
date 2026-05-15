@@ -4,16 +4,16 @@ import nodemailer from "nodemailer";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 
-
 dotenv.config();
 
 const app = express();
 
 app.use(
   cors({
-    origin: "https://furqan-life.netlify.app",
+    origin: ["http://localhost:5173", "https://furqan-life.netlify.app"],
   }),
 );
+
 app.use(express.json());
 
 app.get("/", (req, res) => {
@@ -47,10 +47,9 @@ app.post("/send", async (req, res) => {
     console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
   } catch (error) {
     console.log("EMAIL ERROR:", error);
-    res.status(500).json({ success: false });
+    res.status(500).json({ success: false, error: error.message });
   }
 });
-
 
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
@@ -60,11 +59,7 @@ app.post("/login", async (req, res) => {
     return res.status(401).json({ message: "Invalid credentials" });
   }
 
-  const token = jwt.sign(
-    { email },
-    "SECRET_KEY",
-    { expiresIn: "1h" }
-  );
+  const token = jwt.sign({ email }, "SECRET_KEY", { expiresIn: "1h" });
 
   res.json({ token });
 });
