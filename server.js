@@ -16,7 +16,7 @@ app.use(
   }),
 );
 
-app.options("*", cors());
+app.options(/.*/, cors());
 
 app.use(express.json());
 
@@ -45,18 +45,15 @@ app.post("/send", async (req, res) => {
       text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
     });
 
-    res.status(200).json({ success: true });
-
-    console.log("Message sent: %s", info.messageId);
-    console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+    return res.status(200).json({ success: true });
   } catch (error) {
-  console.log("EMAIL ERROR FULL:", error);
-  console.log("ENV CHECK:", {
-    EMAIL: process.env.EMAIL,
-    PASSWORD: !!process.env.PASSWORD,
-    EMAILTO: process.env.EMAILTO
-  });
-}
+    console.log("EMAIL ERROR FULL:", error);
+
+    return res.status(500).json({
+      success: false,
+      error: error.message,
+    });
+  }
 });
 
 app.post("/login", async (req, res) => {
