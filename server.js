@@ -21,6 +21,8 @@ app.get("/", (req, res) => {
 });
 
 app.post("/send", async (req, res) => {
+  console.log(process.env.EMAIL, process.env.PASSWORD);
+
   try {
     const { name, email, message } = req.body;
 
@@ -64,6 +66,8 @@ app.post("/login", async (req, res) => {
   res.json({ token });
 });
 
-app.listen(5000, () => {
-  console.log("Server running on port 5000");
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
