@@ -11,8 +11,12 @@ const app = express();
 app.use(
   cors({
     origin: ["http://localhost:5173", "https://furqan-life.netlify.app"],
+    methods: ["GET", "POST", "OPTIONS"],
+    credentials: true
   }),
 );
+
+app.options("*", cors());
 
 app.use(express.json());
 
@@ -21,8 +25,6 @@ app.get("/", (req, res) => {
 });
 
 app.post("/send", async (req, res) => {
-  console.log(process.env.EMAIL, process.env.PASSWORD);
-
   try {
     const { name, email, message } = req.body;
 
@@ -48,9 +50,13 @@ app.post("/send", async (req, res) => {
     console.log("Message sent: %s", info.messageId);
     console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
   } catch (error) {
-    console.log("EMAIL ERROR:", error);
-    res.status(500).json({ success: false, error: error.message });
-  }
+  console.log("EMAIL ERROR FULL:", error);
+  console.log("ENV CHECK:", {
+    EMAIL: process.env.EMAIL,
+    PASSWORD: !!process.env.PASSWORD,
+    EMAILTO: process.env.EMAILTO
+  });
+}
 });
 
 app.post("/login", async (req, res) => {
