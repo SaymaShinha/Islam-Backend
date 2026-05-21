@@ -10,11 +10,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "https://furqan-life.netlify.app",
-      "https://islam-frontend.vercel.app",
-    ],
+    origin: ["http://localhost:5173", "https://furqan-life.netlify.app"],
     methods: ["GET", "POST", "OPTIONS"],
     credentials: true,
   }),
@@ -30,6 +26,12 @@ app.get("/", (req, res) => {
 
 app.post("/send", async (req, res) => {
   try {
+    console.log("ENV CHECK:", {
+      EMAIL: process.env.EMAIL,
+      EMAILTO: process.env.EMAILTO,
+      PASSWORD_EXISTS: !!process.env.PASSWORD,
+    });
+
     const { name, email, message } = req.body;
 
     const transporter = nodemailer.createTransport({
