@@ -10,9 +10,13 @@ const app = express();
 
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://furqan-life.netlify.app"],
+    origin: [
+      "http://localhost:5173",
+      "https://furqan-life.netlify.app",
+      "https://islam-frontend.vercel.app",
+    ],
     methods: ["GET", "POST", "OPTIONS"],
-    credentials: true
+    credentials: true,
   }),
 );
 
@@ -41,7 +45,7 @@ app.post("/send", async (req, res) => {
     const info = await transporter.sendMail({
       from: process.env.EMAIL,
       to: process.env.EMAILTO,
-      subject: "New Contact Form Islam",
+      subject: "New Contact Form Furqan Life",
       text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
     });
 
