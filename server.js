@@ -24,6 +24,8 @@ app.get("/", (req, res) => {
   res.send("Backend is working");
 });
 
+console.log("SERVER START FILE ACTIVE");
+
 app.post("/send", async (req, res) => {
   try {
     console.log("ENV CHECK:", {
