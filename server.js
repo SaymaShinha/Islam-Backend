@@ -24,39 +24,36 @@ app.get("/", (req, res) => {
   res.send("Backend is working");
 });
 
-console.log(process.env.EMAIL, process.env.EMAILTO, process.env.PASSWORD);
-
-
 app.post("/send", async (req, res) => {
-  
   try {
+    console.log("BODY:", req.body);
+    console.log("ENV CHECK:", {
+      EMAIL: process.env.EMAIL,
+      EMAILTO: process.env.EMAILTO,
+      PASSWORD: process.env.PASSWORD ? "exists" : "missing",
+    });
+
     const { name, email, message } = req.body;
 
     const transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      port: 587,
-      secure: false,
+      service: "gmail",
       auth: {
         user: process.env.EMAIL,
         pass: process.env.PASSWORD,
       },
     });
 
-    const info = await transporter.sendMail({
+    await transporter.sendMail({
       from: process.env.EMAIL,
       to: process.env.EMAILTO,
       subject: "New Contact Form Furqan Life",
       text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
     });
 
-    return res.status(200).json({ success: true });
+    res.status(200).json({ success: true });
   } catch (error) {
     console.log("EMAIL ERROR FULL:", error);
-
-    return res.status(500).json({
-      success: false,
-      error: error.message,
-    });
+    res.status(500).json({ error: error.message });
   }
 });
 
