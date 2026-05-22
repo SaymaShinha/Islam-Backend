@@ -11,7 +11,6 @@ const app = express();
 app.use(
   cors({
     origin: ["http://localhost:5173", "https://furqan-life.netlify.app"],
-    methods: ["GET", "POST", "OPTIONS"],
     credentials: true,
   }),
 );
@@ -19,49 +18,24 @@ app.use(
 app.options(/.*/, cors());
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
   res.send("Backend is working");
 });
 
-console.log("SERVER START FILE ACTIVE");
-
 app.post("/send", async (req, res) => {
-  try {
-    console.log("ENV CHECK:", {
-      EMAIL: process.env.EMAIL,
-      EMAILTO: process.env.EMAILTO,
-      PASSWORD_EXISTS: !!process.env.PASSWORD,
-    });
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.EMAIL,
+      pass: process.env.PASSWORD,
+    },
+  });
 
-    const { name, email, message } = req.body;
+  await transporter.verify();
 
-    const transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      port: 587,
-      secure: false,
-      auth: {
-        user: process.env.EMAIL,
-        pass: process.env.PASSWORD,
-      },
-    });
-
-    const info = await transporter.sendMail({
-      from: process.env.EMAIL,
-      to: process.env.EMAILTO,
-      subject: "New Contact Form Furqan Life",
-      text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
-    });
-
-    return res.status(200).json({ success: true });
-  } catch (error) {
-    console.log("EMAIL ERROR FULL:", error);
-
-    return res.status(500).json({
-      success: false,
-      error: error.message,
-    });
-  }
+  console.log("SMTP READY");
 });
 
 app.post("/login", async (req, res) => {
