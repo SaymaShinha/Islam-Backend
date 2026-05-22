@@ -24,6 +24,7 @@ app.get("/", (req, res) => {
   res.send("Backend is working");
 });
 
+console.log(process.env.EMAIL, process.env.EMAILTO, process.env.PASSWORD);
 
 
 app.post("/send", async (req, res) => {
