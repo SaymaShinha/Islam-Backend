@@ -29,15 +29,17 @@ app.get("/", (req, res) => {
 });
 
 app.post("/send", async (req, res) => {
-    console.log("🔥 SEND ROUTE HIT");
-  try {
-    console.log("BODY:", req.body);
-    console.log("ENV CHECK:", {
-      EMAIL: process.env.EMAIL,
-      EMAILTO: process.env.EMAILTO,
-      PASSWORD: process.env.PASSWORD ? "exists" : "missing",
-    });
+  console.log("🔥 SEND ROUTE HIT");
+  alert("send");
 
+  console.log("BODY:", req.body);
+  console.log("ENV CHECK:", {
+    EMAIL: process.env.EMAIL,
+    EMAILTO: process.env.EMAILTO,
+    PASSWORD: process.env.PASSWORD ? "exists" : "missing",
+  });
+
+  try {
     const { name, email, message } = req.body;
 
     const transporter = nodemailer.createTransport({
