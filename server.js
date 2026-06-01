@@ -30,7 +30,6 @@ app.get("/", (req, res) => {
 
 app.post("/send", async (req, res) => {
   console.log("🔥 SEND ROUTE HIT");
-  alert("send");
 
   console.log("BODY:", req.body);
   console.log("ENV CHECK:", {
@@ -63,6 +62,7 @@ app.post("/send", async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
 
 const PORT = process.env.PORT || 5000;
 
