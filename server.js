@@ -31,11 +31,10 @@ app.get("/", (req, res) => {
 app.post("/send", async (req, res) => {
   console.log("🔥 SEND ROUTE HIT");
 
-  console.log("BODY:", req.body);
   console.log("ENV CHECK:", {
-    EMAIL: process.env.EMAIL,
-    EMAILTO: process.env.EMAILTO,
-    PASSWORD: process.env.PASSWORD ? "exists" : "missing",
+    EMAIL: !!process.env.EMAIL,
+    EMAILTO: !!process.env.EMAILTO,
+    PASSWORD: !!process.env.PASSWORD,
   });
 
   try {
@@ -62,7 +61,6 @@ app.post("/send", async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
-
 
 const PORT = process.env.PORT || 5000;
 
