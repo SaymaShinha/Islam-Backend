@@ -13,7 +13,7 @@ app.use(
     origin: [
       "http://localhost:5173",
       "https://furqan-life.netlify.app",
-      "https://islam-frontend.vercel.app/",
+      "https://islam-frontend.vercel.app",
     ],
     credentials: true,
   }),
