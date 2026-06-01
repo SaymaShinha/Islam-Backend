@@ -19,6 +19,12 @@ app.use(
   }),
 );
 
+  console.log("ENV CHECK:", {
+    EMAIL: !!process.env.EMAIL,
+    EMAILTO: !!process.env.EMAILTO,
+    PASSWORD: !!process.env.PASSWORD,
+  });
+
 app.options(/.*/, cors());
 
 app.use(express.json());
