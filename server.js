@@ -48,6 +48,7 @@ app.post("/send", async (req, res) => {
         user: process.env.EMAIL,
         pass: process.env.PASSWORD,
       },
+      family: 4, // 🔥 forces IPv4 (important)
     });
 
     await transporter.sendMail({
