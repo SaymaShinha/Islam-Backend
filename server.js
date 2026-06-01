@@ -29,6 +29,7 @@ app.get("/", (req, res) => {
 });
 
 app.post("/send", async (req, res) => {
+    console.log("🔥 SEND ROUTE HIT");
   try {
     console.log("BODY:", req.body);
     console.log("ENV CHECK:", {
