@@ -39,8 +39,8 @@ app.post("/send", async (req, res) => {
 
     resend.emails.send({
       from: "onboarding@resend.dev",
-      to: "sayma.shinha@gmail.com",
-      subject: "Hello World",
+      to: "furqanlife0912@gmail.com",
+      subject: "Furqan Life",
       html: `<p>Name: ${name}\nEmail: ${email}\n <strong>Message: ${message}</strong>!</p>`,
     });
 
