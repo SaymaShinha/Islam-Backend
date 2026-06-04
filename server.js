@@ -4,7 +4,12 @@ import nodemailer from "nodemailer";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 import { Resend } from "resend";
+import authRoutes from "./routes/authRoutes.js";
 
+import { errorHandler } from "./middlewares/errorMiddleware.js";
+import { notFound } from "./middlewares/notFound.js";
+import rateLimiter from "./middlewares/rateLimiter.js";
+import connectDatabase from "./config/database.js";
 
 dotenv.config();
 
@@ -25,6 +30,13 @@ app.options(/.*/, cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+
+// rate limit
+app.use(rateLimiter);
+
+// DB connect
+connectDatabase();
 
 app.get("/", (req, res) => {
   res.send("Backend is working");
@@ -95,3 +107,11 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+
+// routes
+app.use("/api/auth", authRoutes);
+
+// error handling
+app.use(notFound);
+app.use(errorHandler);
