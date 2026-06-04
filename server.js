@@ -3,6 +3,8 @@ import cors from "cors";
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
+import { Resend } from "resend";
+
 
 dotenv.config();
 
@@ -28,6 +30,28 @@ app.get("/", (req, res) => {
   res.send("Backend is working");
 });
 
+app.post("/send", async (req, res) => {
+  try {
+    const { name, email, message } = req.body;
+    const resendAPT = process.env.RESENDAPI;
+
+    const resend = new Resend(resendAPT);
+
+    resend.emails.send({
+      from: "onboarding@resend.dev",
+      to: "sayma.shinha@gmail.com",
+      subject: "Hello World",
+      html: `<p>Name: ${name}\nEmail: ${email}\n <strong>Message: ${message}</strong>!</p>`,
+    });
+
+    res.status(200).json({ success: true });
+  } catch (error) {
+    console.log("EMAIL ERROR FULL:", error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+/*
 app.post("/send", async (req, res) => {
   console.log("🔥 SEND ROUTE HIT");
 
@@ -64,6 +88,7 @@ app.post("/send", async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+*/
 
 const PORT = process.env.PORT || 5000;
 
