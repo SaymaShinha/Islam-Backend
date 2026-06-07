@@ -1,6 +1,10 @@
 // routes/authRoutes.js
 import express from "express";
-import { register, registerByGoogleAcc, login } from "../controllers/authController.js";
+import {
+  register,
+  registerByGoogleAcc,
+  login,
+} from "../controllers/authController.js";
 import multer from "multer";
 
 const upload = multer();
