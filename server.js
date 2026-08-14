@@ -80,7 +80,7 @@ app.post("/send", async (req, res) => {
 
             <!-- Header -->
             <div style="
-              background: linear-gradient(135deg, #6366f1, #8b5cf6);
+              background: linear-gradient(135deg, green, #5cf6be);
               padding: 30px;
               text-align: center;
               color: white;
