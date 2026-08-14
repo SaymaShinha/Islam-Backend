@@ -97,7 +97,7 @@ app.post("/send", async (req, res) => {
                 opacity: 0.9;
                 font-size: 14px;
               ">
-                You received a new message from your website
+                You received a new message from FurqanLife
               </p>
             </div>
 
@@ -120,7 +120,7 @@ app.post("/send", async (req, res) => {
                   <strong>Email</strong><br />
                   <a
                     href="mailto:${email}"
-                    style="color: #6366f1; text-decoration: none;"
+                    style="color: green; text-decoration: none;"
                   >
                     ${email}
                   </a>
@@ -137,7 +137,7 @@ app.post("/send", async (req, res) => {
 
               <div style="
                 background: #f9fafb;
-                border-left: 4px solid #6366f1;
+                border-left: 4px solid green;
                 padding: 18px;
                 border-radius: 8px;
                 line-height: 1.6;
@@ -155,7 +155,7 @@ app.post("/send", async (req, res) => {
                   href="mailto:${email}"
                   style="
                     display: inline-block;
-                    background: #6366f1;
+                    background: green;
                     color: #ffffff;
                     text-decoration: none;
                     padding: 13px 25px;
