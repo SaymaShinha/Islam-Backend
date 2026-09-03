@@ -1,11 +1,7 @@
 import express from "express";
 import cors from "cors";
-import nodemailer from "nodemailer";
 import dotenv from "dotenv";
-import jwt from "jsonwebtoken";
 import { Resend } from "resend";
-import authRoutes from "./routes/authRoutes.js";
-import userRoutes from "./routes/userRoutes.js";
 
 import { errorHandler } from "./middlewares/errorMiddleware.js";
 import { notFound } from "./middlewares/notFound.js";
@@ -20,6 +16,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
+      "http://localhost:5174",
       "https://furqan-life.netlify.app",
       "https://islam-frontend.vercel.app",
     ],
@@ -239,9 +236,6 @@ app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 
-// routes
-app.use("/api/auth", authRoutes);
-app.use("/api/users", userRoutes);
 
 // error handling
 app.use(notFound);
