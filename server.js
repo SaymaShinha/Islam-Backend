@@ -8,6 +8,7 @@ import { notFound } from "./middlewares/notFound.js";
 import rateLimiter from "./middlewares/rateLimiter.js";
 import connectDatabase from "./config/database.js";
 
+
 dotenv.config();
 
 const app = express();
@@ -236,6 +237,10 @@ app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 
+// Ignore browser favicon request
+app.get("/favicon.ico", (req, res) => {
+  res.status(204).end();
+});
 
 // error handling
 app.use(notFound);
